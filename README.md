@@ -251,7 +251,7 @@ noepicycle's design is grounded in published findings:
 Early development. Not yet production-ready.
 
 - [x] README / research foundation
-- [ ] Core state schema (`state.py`)
+- [x] Core state schema (`state.py`)
 - [ ] Default ladder (`ladder.py`)
 - [ ] Supervisor nodes (`nodes.py`)
 - [ ] LangGraph graph wiring (`graph.py`)
