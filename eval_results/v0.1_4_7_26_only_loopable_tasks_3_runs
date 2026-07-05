@@ -1,0 +1,179 @@
+
+============================================================
+noepicycle benchmark
+============================================================
+Tasks: 5
+Runs per task per condition: 3
+Budget per task: 25,000 tokens
+Flat baseline iterations: 5
+============================================================
+
+Pulling Docker image...
+Docker ready.
+
+-- csv_parser (hard) --
+  run 1/3
+    [1/3] noepicycle...
+         score=100% tokens=627 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=584 iters=1
+    [3/3] single shot...
+         score=100% tokens=583
+  run 2/3
+    [1/3] noepicycle...
+         score=100% tokens=882 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=802 iters=1
+    [3/3] single shot...
+         score=100% tokens=573
+  run 3/3
+    [1/3] noepicycle...
+         score=100% tokens=748 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=655 iters=1
+    [3/3] single shot...
+         score=100% tokens=570
+  avg saved: -72 tokens (-11%) vs flat baseline
+  noepi: 752 +/- 128 tokens, score 100%
+  flat:  680 tokens, score 100%
+
+-- lru_cache (hard) --
+  run 1/3
+    [1/3] noepicycle...
+         score=100% tokens=451 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=778 iters=1
+    [3/3] single shot...
+         score=0% tokens=840
+  run 2/3
+    [1/3] noepicycle...
+         score=100% tokens=733 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=2191 iters=2
+    [3/3] single shot...
+         score=100% tokens=979
+  run 3/3
+    [1/3] noepicycle...
+         score=100% tokens=727 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=3431 iters=2
+    [3/3] single shot...
+         score=0% tokens=764
+  avg saved: +1496 tokens (70%) vs flat baseline
+  noepi: 637 +/- 161 tokens, score 100%
+  flat:  2133 tokens, score 100%
+
+-- rate_limiter (hard) --
+  run 1/3
+    [1/3] noepicycle...
+         score=100% tokens=323 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=322 iters=1
+    [3/3] single shot...
+         score=100% tokens=315
+  run 2/3
+    [1/3] noepicycle...
+         score=100% tokens=626 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=323 iters=1
+    [3/3] single shot...
+         score=100% tokens=738
+  run 3/3
+    [1/3] noepicycle...
+         score=100% tokens=656 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=316 iters=1
+    [3/3] single shot...
+         score=80% tokens=654
+  avg saved: -215 tokens (-67%) vs flat baseline
+  noepi: 535 +/- 184 tokens, score 100%
+  flat:  320 tokens, score 100%
+
+-- expression_evaluator (hard) --
+  run 1/3
+    [1/3] noepicycle...
+         score=100% tokens=724 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=699 iters=1
+    [3/3] single shot...
+         score=0% tokens=646
+  run 2/3
+    [1/3] noepicycle...
+         score=100% tokens=1753 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=955 iters=1
+    [3/3] single shot...
+         score=0% tokens=960
+  run 3/3
+    [1/3] noepicycle...
+         score=100% tokens=842 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=2351 iters=2
+    [3/3] single shot...
+         score=0% tokens=706
+  avg saved: +229 tokens (17%) vs flat baseline
+  noepi: 1106 +/- 563 tokens, score 100%
+  flat:  1335 tokens, score 100%
+
+-- mini_interpreter (hard) --
+  run 1/3
+    [1/3] noepicycle...
+         score=100% tokens=883 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=957 iters=1
+    [3/3] single shot...
+         score=50% tokens=583
+  run 2/3
+    [1/3] noepicycle...
+         score=100% tokens=589 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=579 iters=1
+    [3/3] single shot...
+         score=50% tokens=649
+  run 3/3
+    [1/3] noepicycle...
+         score=100% tokens=594 stop=solved
+    [2/3] flat baseline...
+         score=100% tokens=613 iters=1
+    [3/3] single shot...
+         score=100% tokens=1033
+  avg saved: +28 tokens (4%) vs flat baseline
+  noepi: 689 +/- 168 tokens, score 100%
+  flat:  716 tokens, score 100%
+
+
+============================================================
+SUMMARY
+============================================================
+
+Runs per condition: 3 (means reported)
+Total tokens -- noepicycle: 3719  flat: 5185
+Net tokens saved: 1466 (28.3% vs flat baseline)
+Avg score -- noepicycle: 100%  flat: 100%
+Task outcomes: 3 noepicycle wins, 2 flat wins
+
+Per-task breakdown (means over 3 runs):
+  Task                          noepi    flat    saved  %saved   noepi   flat
+                            tok+/-std  tokens   tokens           score  score
+  ------------------------------------------------------------------------------
+  csv_parser                752+/-128     680      -72    -11%    100%   100%  
+  lru_cache                 637+/-161    2133    +1496     70%    100%   100% <
+  rate_limiter              535+/-184     320     -215    -67%    100%   100%  
+  expression_evaluator      1106+/-563    1335     +229     17%    100%   100% <
+  mini_interpreter          689+/-168     716      +28      4%    100%   100% <
+
+============================================================
+CONCLUSION
+============================================================
+Across 3 runs per condition on 5 hard coding tasks,
+noepicycle matched or exceeded flat baseline accuracy on 3/5 tasks.
+On tasks where noepicycle outperformed the flat baseline,
+it reduced token cost by 30% on average (mean over 3 runs).
+Overall mean token delta vs flat 5-iteration baseline: 28%
+
+Tasks where flat baseline won (2):
+  csv_parser: noepi 752 vs flat 680 tokens (flat solved in 1.0 iters avg — supervisor overhead not offset)
+  rate_limiter: noepi 535 vs flat 320 tokens (flat solved in 1.0 iters avg — supervisor overhead not offset)
+============================================================
+
+Full results written to C:\Users\TREX2\no-epicycle\eval\results.json

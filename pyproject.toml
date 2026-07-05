@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "noepicycle"
-version = "0.1.0"
+version = "0.1.1"
 description = "A LangGraph supervisor that prevents agentic coding loops from going in circles and burning tokens"
 readme = "README.md"
 license = { text = "MIT" }

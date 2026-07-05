@@ -5,10 +5,12 @@ from noepicycle.state import LoopState, initial_state
 from noepicycle.ladder import Ladder, DEFAULT_LADDER
 from noepicycle.executor import Executor
 from noepicycle.nodes import (
+    make_preflight_node,
     make_inner_loop_node,
     make_score_node,
     make_supervisor_node,
     make_switch_node,
+    preflight_route,
     route,
 )
 
@@ -18,6 +20,7 @@ def build_graph(
     ladder: Ladder = DEFAULT_LADDER,
     inner_loop_fn: Optional[Callable] = None,
 ):
+    preflight_node = make_preflight_node(executor, inner_loop_fn)
     inner_loop_node = make_inner_loop_node(executor, inner_loop_fn)
     score_node = make_score_node(executor)
     supervisor_node = make_supervisor_node(ladder)
@@ -25,12 +28,22 @@ def build_graph(
 
     graph = StateGraph(LoopState)
 
+    graph.add_node("preflight", preflight_node)
     graph.add_node("inner_loop", inner_loop_node)
     graph.add_node("score", score_node)
     graph.add_node("supervisor", supervisor_node)
     graph.add_node("switch", switch_node)
 
-    graph.set_entry_point("inner_loop")
+    graph.set_entry_point("preflight")
+
+    graph.add_conditional_edges(
+        "preflight",
+        preflight_route,
+        {
+            "end": END,
+            "supervisor": "supervisor",
+        },
+    )
 
     graph.add_edge("inner_loop", "score")
     graph.add_edge("score", "supervisor")
@@ -70,7 +83,7 @@ class RunResult:
 class Supervisor:
     def __init__(
         self,
-        score_fn: Optional[Callable] = None,
+        score_fn=None,
         test_code: Optional[str] = None,
         budget_cap: int = 50_000,
         ladder: Ladder = DEFAULT_LADDER,

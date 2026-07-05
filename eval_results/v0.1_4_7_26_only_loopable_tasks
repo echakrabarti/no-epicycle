@@ -1,0 +1,88 @@
+
+============================================================
+noepicycle benchmark
+============================================================
+Tasks: 5
+Budget per task: 25,000 tokens
+Flat baseline iterations: 5
+============================================================
+
+Pulling Docker image...
+Docker ready.
+
+-- csv_parser (hard) --
+  [1/3] noepicycle...
+        score=100% tokens=1263 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=1352 iters=1
+  [3/3] single shot...
+        score=100% tokens=1088
+        saved +89 tokens (7%) vs flat baseline
+
+-- lru_cache (hard) --
+  [1/3] noepicycle...
+        score=100% tokens=881 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=788 iters=1
+  [3/3] single shot...
+        score=0% tokens=885
+        saved -93 tokens (-12%) vs flat baseline
+
+-- rate_limiter (hard) --
+  [1/3] noepicycle...
+        score=100% tokens=322 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=634 iters=1
+  [3/3] single shot...
+        score=100% tokens=633
+        saved +312 tokens (49%) vs flat baseline
+
+-- expression_evaluator (hard) --
+  [1/3] noepicycle...
+        score=100% tokens=723 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=2404 iters=2
+  [3/3] single shot...
+        score=100% tokens=891
+        saved +1681 tokens (70%) vs flat baseline
+
+-- mini_interpreter (hard) --
+  [1/3] noepicycle...
+        score=100% tokens=1190 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=1849 iters=2
+  [3/3] single shot...
+        score=0% tokens=652
+        saved +659 tokens (36%) vs flat baseline
+
+
+============================================================
+SUMMARY
+============================================================
+
+Total tokens -- noepicycle: 4,379  flat: 7,027
+Net tokens saved: 2,648 (37.7% vs flat baseline)
+Avg score -- noepicycle: 100%  flat: 100%
+Task outcomes: 4 noepicycle wins, 0 tied, 1 flat wins
+
+Per-task breakdown:
+  Task                        noepi    flat    saved  %saved   noepi   flat
+                             tokens  tokens   tokens           score  score
+  --------------------------------------------------------------------------
+  csv_parser                  1,263   1,352      +89      7%    100%   100% <
+  lru_cache                     881     788      -93    -12%    100%   100%
+  rate_limiter                  322     634     +312     49%    100%   100% <
+  expression_evaluator          723   2,404    +1681     70%    100%   100% <
+  mini_interpreter            1,190   1,849     +659     36%    100%   100% <
+
+============================================================
+CONCLUSION
+============================================================
+On tasks requiring iterative refinement (5 hard coding problems),
+noepicycle matched or exceeded flat baseline accuracy on 4/5 tasks.
+On tasks where noepicycle outperformed the flat baseline,
+it reduced token cost by 40% on average.
+Overall token delta vs flat 5-iteration baseline: 38%
+============================================================
+
+Full results written to C:\Users\TREX2\no-epicycle\eval\results.json

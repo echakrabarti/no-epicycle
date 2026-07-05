@@ -1,0 +1,111 @@
+
+============================================================
+noepicycle benchmark
+============================================================
+Tasks: 8
+Budget per task: 25,000 tokens
+Flat baseline iterations: 5
+============================================================
+
+Pulling Docker image...
+Docker ready.
+
+-- reverse_string (easy) --
+  [1/3] noepicycle...
+        score=100% tokens=122 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=574 iters=2
+  [3/3] single shot...
+        score=100% tokens=122
+        saved +452 tokens (79%) vs flat baseline
+
+-- flatten_nested (medium) --
+  [1/3] noepicycle...
+        score=100% tokens=626 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=1138 iters=2
+  [3/3] single shot...
+        score=100% tokens=270
+        saved +512 tokens (45%) vs flat baseline
+
+-- two_sum (medium) --
+  [1/3] noepicycle...
+        score=80% tokens=17149 stop=exhausted
+  [2/3] flat baseline...
+        score=80% tokens=2325 iters=5
+  [3/3] single shot...
+        score=80% tokens=199
+        saved -14824 tokens (-638%) vs flat baseline
+
+-- valid_parentheses (medium) --
+  [1/3] noepicycle...
+        score=100% tokens=237 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=394 iters=1
+  [3/3] single shot...
+        score=100% tokens=402
+        saved +157 tokens (40%) vs flat baseline
+
+-- longest_common_prefix (medium) --
+  [1/3] noepicycle...
+        score=100% tokens=389 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=442 iters=1
+  [3/3] single shot...
+        score=0% tokens=388
+        saved +53 tokens (12%) vs flat baseline
+
+-- merge_intervals (hard) --
+  [1/3] noepicycle...
+        score=100% tokens=1858 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=542 iters=1
+  [3/3] single shot...
+        score=0% tokens=352
+        saved -1316 tokens (-243%) vs flat baseline
+
+-- word_frequency (medium) --
+  [1/3] noepicycle...
+        score=100% tokens=239 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=255 iters=1
+  [3/3] single shot...
+        score=100% tokens=235
+        saved +16 tokens (6%) vs flat baseline
+
+-- is_palindrome_number (easy) --
+  [1/3] noepicycle...
+        score=100% tokens=169 stop=solved
+  [2/3] flat baseline...
+        score=100% tokens=169 iters=1
+  [3/3] single shot...
+        score=100% tokens=175
+        saved 0 tokens (0%) vs flat baseline
+
+
+============================================================
+SUMMARY
+============================================================
+
+Total tokens — noepicycle: 20,789  flat: 5,839
+Total saved:  -14,950 tokens (-256.0%)
+Avg score  — noepicycle: 98%  flat: 98%
+
+Per-task breakdown:
+  Task                        noepi    flat    saved  %saved  noepi score  flat score
+  --------------------------------------------------------------------------------
+  reverse_string                122     574     +452     79%        100%       100%
+  flatten_nested                626   1,138     +512     45%        100%       100%
+  two_sum                    17,149   2,325   -14824   -638%         80%        80%
+  valid_parentheses             237     394     +157     40%        100%       100%
+  longest_common_prefix         389     442      +53     12%        100%       100%
+  merge_intervals             1,858     542    -1316   -243%        100%       100%
+  word_frequency                239     255      +16      6%        100%       100%
+  is_palindrome_number          169     169        0      0%        100%       100%
+
+------------------------------------------------------------
+CONCLUSION: noepicycle reduces token cost by -256% on average
+             across 8 coding tasks at equal or better accuracy
+------------------------------------------------------------
+
+Full results written to C:\Users\TREX2\no-epicycle\eval\results.json

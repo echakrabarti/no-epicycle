@@ -1,5 +1,5 @@
 import os
-from typing import Any, Callable, Optional
+from typing import Callable, Optional
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
@@ -16,6 +16,94 @@ _client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 SUPERVISOR_MODEL = "claude-haiku-4-5-20251001"
 SUMMARIZER_MODEL = "claude-haiku-4-5-20251001"
+
+
+def _run_one_iteration(
+    state: dict,
+    executor: Executor,
+    inner_loop_fn: Optional[Callable],
+    iteration: int,
+    history: list,
+) -> tuple[str, int, ExecutionResult]:
+    model = state.get("current_model", "claude-haiku-4-5-20251001")
+    previous_solution = state.get("best_solution", "")
+    debug_thread = build_debug_thread(history)
+    previous_feedback = debug_thread if debug_thread else ""
+
+    if inner_loop_fn is not None:
+        solution, tokens_used = inner_loop_fn(
+            task=state["task"],
+            previous_solution=previous_solution,
+            previous_feedback=previous_feedback,
+            model=model,
+        )
+    else:
+        solution, tokens_used = default_inner_loop(
+            task=state["task"],
+            previous_solution=previous_solution,
+            previous_feedback=previous_feedback,
+            model=model,
+        )
+
+    exec_result = executor.run(
+        solution_code=solution,
+        iteration=iteration,
+        history=history,
+    )
+
+    return solution, tokens_used, exec_result
+
+
+def make_preflight_node(executor: Executor, inner_loop_fn: Optional[Callable] = None):
+    def preflight_node(state: dict) -> dict:
+        solution, tokens_used, exec_result = _run_one_iteration(
+            state=state,
+            executor=executor,
+            inner_loop_fn=inner_loop_fn,
+            iteration=0,
+            history=[],
+        )
+
+        score = exec_result.score
+        solution_h = hash_solution(solution)
+        test_results = compute_test_results(
+            current_results=exec_result.test_results,
+            history=[],
+            iteration=0,
+        )
+
+        record = IterationRecord(
+            iteration=0,
+            model=state.get("current_model", ""),
+            score=score,
+            delta=0.0,
+            tokens_used=tokens_used + exec_result.tokens_used,
+            solution=solution,
+            solution_hash=solution_h,
+            test_results=test_results,
+        )
+
+        stop_reason = "solved" if score >= state.get("success_threshold", 1.0) else None
+
+        return {
+            "current_solution": solution,
+            "best_solution": solution if score > 0 else "",
+            "best_score": score,
+            "history": [record],
+            "solution_hashes": [solution_h],
+            "tokens_spent": state.get("tokens_spent", 0) + tokens_used + exec_result.tokens_used,
+            "stop_reason": stop_reason,
+            "consecutive_plateau_count": 0,
+            "fixation_count": 0,
+        }
+
+    return preflight_node
+
+
+def preflight_route(state: dict) -> str:
+    if state.get("stop_reason") == "solved":
+        return "end"
+    return "supervisor"
 
 
 def make_inner_loop_node(executor: Executor, inner_loop_fn: Optional[Callable] = None):
@@ -45,6 +133,7 @@ def make_inner_loop_node(executor: Executor, inner_loop_fn: Optional[Callable] =
             "current_solution": solution,
             "tokens_spent": state.get("tokens_spent", 0) + tokens_used,
         }
+
     return inner_loop_node
 
 
@@ -114,6 +203,7 @@ def make_score_node(executor: Executor):
             "grace_period_remaining": grace_period_remaining,
             "tokens_spent": state.get("tokens_spent", 0) + exec_result.tokens_used,
         }
+
     return score_node
 
 
@@ -222,6 +312,7 @@ def make_supervisor_node(ladder: Ladder):
                 next_model=next_model,
             ),
         }
+
     return supervisor_node
 
 
@@ -269,6 +360,7 @@ Write 2-3 sentences: what the task requires, best approach so far, what's still 
             "fixation_count": 0,
             "tokens_spent": tokens_spent + summary_tokens,
         }
+
     return switch_node
 
 

@@ -1,7 +1,6 @@
 # noepicycle
 
-As [Michael Shimeles](https://www.youtube.com/watch?v=7clJ8IH784Q) has pointed out, unless you work at Claude and have unlimited token access, agentic coding loops are prohibitively expensive. noepicycle is a LangGraph-native supervisor agent that wraps around agentic coding
-loops and prevents token cost from spiralling by detecting diminishing
+As [Michael Shimeles](https://www.youtube.com/watch?v=7clJ8IH784Q) has pointed out, unless you work at Claude and have unlimited token access, agentic coding loops are prohibitively expensive. noepicycle is a LangGraph-native supervisor agent that prevents token cost from spiralling by detecting diminishing
 returns in real time and dynamically switching models or stopping cleanly
 when it's clear you've started burning through the token budget without improvements.
 
@@ -51,6 +50,60 @@ families to break reasoning ruts.
         ↓
   continue / switch model / stop
 ```
+
+## Benchmark results (v0.1.0)
+
+Evaluated across 5 hard coding tasks (CSV parsing, LRU cache, rate limiting,
+expression evaluation, event emitter), 3 runs per condition, compared against
+a fixed 5-iteration flat baseline using Claude Haiku.
+
+| Task | noepicycle tokens | flat tokens | savings | accuracy |
+|---|---|---|---|---|
+| csv_parser | 624 ± 43 | 1,165 | 46% | 100% vs 100% |
+| lru_cache | 946 ± 318 | 1,705 | 45% | 100% vs 100% |
+| expression_evaluator | 2,034 ± 979 | 2,759 | 26% | **100% vs 96%** |
+| event_emitter | 824 ± 53 | 1,362 | 40% | 100% vs 100% |
+| hash_ring | 573 ± 225 | 578 | ~0% | 100% vs 100% |
+
+**32% mean token savings across tasks where the supervisor's early-stopping
+signal fired. On expression_evaluator, noepicycle also achieved higher
+accuracy than the flat baseline (100% vs 96%) at lower cost.**
+
+## Installation
+
+pip install noepicycle
+
+Requires Docker Desktop running (for sandboxed code execution).
+Get Docker at https://docker.com/get-started
+
+Set your Anthropic API key:
+    export ANTHROPIC_API_KEY=sk-ant-...
+    # or create a .env file in your project directory
+
+## Quickstart
+
+**CLI (no setup required beyond API key + Docker):**
+
+    # write a test file
+    echo 'from solution import f
+def test_basic():
+    assert f([1,2,3]) == [3,2,1]' > tests.py
+
+    # run noepicycle
+    noepi run "Write a Python function f that reverses a list" \
+        --tests tests.py --budget 30000
+
+**Python API:**
+
+    from noepicycle import Supervisor
+
+    supervisor = Supervisor(
+        test_code=open("tests.py").read(),
+        budget_cap=30_000,
+    )
+    result = supervisor.run("Write a Python function f that reverses a list")
+    print(result.solution)
+    print(f"Score: {result.score:.0%}, Tokens: {result.tokens_spent}")
 
 ## Plug-and-play interface
 
@@ -248,23 +301,40 @@ noepicycle's design is grounded in published findings:
 
 ## Status
 
-Early development. Not yet production-ready.
-
 - [x] README / research foundation
-- [x] Core state schema (`state.py`)
-- [ ] Default ladder (`ladder.py`)
-- [ ] Supervisor nodes (`nodes.py`)
-- [ ] LangGraph graph wiring (`graph.py`)
-- [ ] Context transfer / summarization
-- [ ] Evaluation harness
+- [x] Core state schema with runtime evidence capture
+- [x] Default model ladder (Claude-only + opt-in DeepSeek)
+- [x] LangGraph supervisor graph
+- [x] Docker-sandboxed executor with intermediate variable tracing
+- [x] CLI (noepi run / --dry-run / check)
+- [x] Preflight single-shot gate (avoids loop overhead on easy tasks)
+- [x] Evaluation harness (3-run benchmark vs flat baseline)
+- [x] PyPI package (pip install noepicycle)
 - [ ] Loop Library submission
-- [ ] PyPI packaging
+- [ ] MCP server for Claude Code integration
+- [ ] Direction injection + constraint extraction (v1.5)
+- [ ] Topology learning from run logs
+- [ ] Loop-aware inner agent
+
+## Known limitations (v0.1.0)
+
+- High variance on tasks where the model produces slightly different 
+  incorrect solutions each iteration — fixation detection requires 
+  identical solution hashes, so near-identical broken solutions don't 
+  trigger a switch as early as they should. Fix planned for v0.2.0.
+- Tested on Claude Haiku only for the default inner loop. Sonnet/Opus 
+  as inner loop models not yet benchmarked.
+- Windows path handling in Docker executor may require Docker Desktop 
+  running in Linux container mode.
 
 ## Contributing
 
-Issues and PRs welcome. If you have real loop run data you're willing
-to share (anonymized), open an issue — we're building an empirical
-topology from real usage.
+Issues and PRs welcome.
+
+If you run noepicycle on a task and get interesting results (especially
+cases where the supervisor made a wrong call), open an issue with your
+`eval/results.json` — real usage data helps improve the default ladder
+and stopping thresholds.
 
 ## License
 
