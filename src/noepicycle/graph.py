@@ -94,6 +94,7 @@ class Supervisor:
         context_transfer: str = "summary",
         success_threshold: float = 1.0,
         fixation_threshold: int = 2,
+        max_iterations: Optional[int] = None,
         timeout: int = 30,
     ):
         if test_code is None and score_fn is not None:
@@ -114,6 +115,7 @@ class Supervisor:
         self.context_transfer = context_transfer
         self.success_threshold = success_threshold
         self.fixation_threshold = fixation_threshold
+        self.max_iterations = max_iterations
 
         self._graph = build_graph(
             executor=self.executor,
@@ -132,6 +134,7 @@ class Supervisor:
             context_transfer=self.context_transfer,
             success_threshold=self.success_threshold,
             fixation_threshold=self.fixation_threshold,
+            max_iterations=self.max_iterations,
         )
         final_state = self._graph.invoke(state)
         return RunResult(final_state)

@@ -16,15 +16,10 @@ _client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 SUPERVISOR_MODEL = "claude-haiku-4-5-20251001"
 SUMMARIZER_MODEL = "claude-haiku-4-5-20251001"
+DEFAULT_MAX_ITERATIONS = None  # disabled by default — rely on signal-based stopping
 
 
-def _run_one_iteration(
-    state: dict,
-    executor: Executor,
-    inner_loop_fn: Optional[Callable],
-    iteration: int,
-    history: list,
-) -> tuple[str, int, ExecutionResult]:
+def _run_one_iteration(state, executor, inner_loop_fn, iteration, history):
     model = state.get("current_model", "claude-haiku-4-5-20251001")
     previous_solution = state.get("best_solution", "")
     debug_thread = build_debug_thread(history)
@@ -184,9 +179,21 @@ def make_score_node(executor: Executor):
         else:
             fixation_count = 0
 
+        # absolute improvement plateau: how many consecutive iterations
+        # have failed to improve on the best score seen so far
+        # catches oscillating scores that never exceed the best
+        abs_improvement = score - new_best_score
+        abs_plateau_count = state.get("abs_plateau_count", 0)
+        abs_threshold = state.get("delta_threshold", 0.02)
+        if iteration > 0 and abs_improvement < abs_threshold:
+            abs_plateau_count += 1
+        else:
+            abs_plateau_count = 0
+
+        # delta plateau: consecutive iterations with small delta
+        # from previous iteration (original signal)
         consecutive_plateau_count = state.get("consecutive_plateau_count", 0)
-        delta_threshold = state.get("delta_threshold", 0.02)
-        if iteration > 0 and abs(delta) < delta_threshold:
+        if iteration > 0 and abs(delta) < abs_threshold:
             consecutive_plateau_count += 1
         else:
             consecutive_plateau_count = 0
@@ -200,6 +207,7 @@ def make_score_node(executor: Executor):
             "solution_hashes": [solution_h],
             "fixation_count": fixation_count,
             "consecutive_plateau_count": consecutive_plateau_count,
+            "abs_plateau_count": abs_plateau_count,
             "grace_period_remaining": grace_period_remaining,
             "tokens_spent": state.get("tokens_spent", 0) + exec_result.tokens_used,
         }
@@ -217,7 +225,9 @@ def make_supervisor_node(ladder: Ladder):
         tokens_remaining = budget_cap - tokens_spent
         grace = state.get("grace_period_remaining", 0)
         success_threshold = state.get("success_threshold", 1.0)
+        max_iterations = state.get("max_iterations", DEFAULT_MAX_ITERATIONS)
 
+        # terminal: solved
         if score >= success_threshold:
             return {
                 "decision": SupervisorDecision(
@@ -228,6 +238,7 @@ def make_supervisor_node(ladder: Ladder):
                 "stop_reason": "solved",
             }
 
+        # terminal: budget exhausted
         budget_pct = tokens_remaining / budget_cap if budget_cap > 0 else 0
         if budget_pct <= 0.05:
             return {
@@ -239,6 +250,19 @@ def make_supervisor_node(ladder: Ladder):
                 "stop_reason": "budget",
             }
 
+        # terminal: max iterations hard cap (optional safety net)
+        # disabled by default — signal-based stopping is preferred
+        if max_iterations is not None and iteration >= max_iterations:
+            return {
+                "decision": SupervisorDecision(
+                    action="stop",
+                    reason=f"Max iterations reached: {iteration}/{max_iterations}",
+                    next_model=None,
+                ),
+                "stop_reason": "max_iterations",
+            }
+
+        # grace period after model switch
         if grace > 0:
             return {
                 "decision": SupervisorDecision(
@@ -255,18 +279,36 @@ def make_supervisor_node(ladder: Ladder):
         fixation_threshold = state.get("fixation_threshold", 2)
         fixation_count = state.get("fixation_count", 0)
         consecutive_plateau_count = state.get("consecutive_plateau_count", 0)
+        abs_plateau_count = state.get("abs_plateau_count", 0)
 
         if iteration > 0:
             delta = history[-1]["delta"]
+
             if delta < 0:
                 signal = "regression"
                 reason = f"Regression: score dropped {abs(delta):.3f} from prior iteration"
+
             elif fixation_count >= fixation_threshold:
                 signal = "fixation"
                 reason = f"Fixation: same solution repeated {fixation_count} times"
-            elif consecutive_plateau_count >= plateau_window:
+
+            elif abs_plateau_count >= plateau_window:
+                # absolute plateau: not improving on best score
+                # catches oscillating scores that fool the delta signal
                 signal = "plateau"
-                reason = f"Plateau: delta < {delta_threshold} for {consecutive_plateau_count} consecutive iterations"
+                reason = (
+                    f"Absolute plateau: no improvement on best score "
+                    f"({state.get('best_score', 0):.2f}) for "
+                    f"{abs_plateau_count} consecutive iterations"
+                )
+
+            elif consecutive_plateau_count >= plateau_window:
+                # delta plateau: consecutive small deltas from previous
+                signal = "plateau"
+                reason = (
+                    f"Delta plateau: delta < {delta_threshold} for "
+                    f"{consecutive_plateau_count} consecutive iterations"
+                )
 
         if budget_pct <= 0.10:
             signal = "budget_low"
@@ -357,6 +399,7 @@ Write 2-3 sentences: what the task requires, best approach so far, what's still 
             "visited_models": [next_model],
             "grace_period_remaining": grace_period,
             "consecutive_plateau_count": 0,
+            "abs_plateau_count": 0,
             "fixation_count": 0,
             "tokens_spent": tokens_spent + summary_tokens,
         }

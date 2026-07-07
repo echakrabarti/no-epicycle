@@ -50,6 +50,8 @@ class LoopState(TypedDict):
     fixation_threshold: int
     decision: Optional[SupervisorDecision]
     consecutive_plateau_count: int
+    abs_plateau_count: int
+    max_iterations: Optional[int]
     delta_threshold: float
     plateau_window: int
     grace_period: int
@@ -166,6 +168,7 @@ def initial_state(
     context_transfer: str = "summary",
     success_threshold: float = 1.0,
     fixation_threshold: int = 2,
+    max_iterations: Optional[int] = None,
 ) -> dict:
     return {
         "task": task,
@@ -183,6 +186,8 @@ def initial_state(
         "fixation_threshold": fixation_threshold,
         "decision": None,
         "consecutive_plateau_count": 0,
+        "abs_plateau_count": 0,
+        "max_iterations": max_iterations,
         "delta_threshold": delta_threshold,
         "plateau_window": plateau_window,
         "grace_period": grace_period,

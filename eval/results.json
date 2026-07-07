@@ -3,14 +3,21 @@
     "task_name": "csv_parser",
     "difficulty": "hard",
     "supervisor_behavior": "multi_requirement_iteration",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 1178.3,
-      "tokens_std": 634.1,
-      "iterations_mean": 1.33,
+      "tokens_mean": 747.4,
+      "tokens_std": 198.6,
+      "iterations_mean": 1.0,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -18,59 +25,108 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        885,
-        744,
-        1906
+        551,
+        708,
+        578,
+        1252,
+        610,
+        762,
+        787,
+        813,
+        747,
+        666
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 638.0,
+      "tokens_mean": 667.2,
       "iterations_mean": 1.0,
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        468,
-        600,
-        846
+        724,
+        734,
+        515,
+        603,
+        855,
+        381,
+        948,
+        579,
+        771,
+        562
       ]
     },
     "single_shot": {
       "score_mean": 1.0,
-      "tokens_mean": 626.3,
+      "tokens_mean": 823.8,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        560,
-        937,
-        382
+        995,
+        1235,
+        600,
+        964,
+        688,
+        962,
+        583,
+        478,
+        762,
+        971
       ]
     },
-    "tokens_saved_mean": -540.3,
-    "pct_saved_mean": -84.69,
+    "tokens_saved_mean": -80.2,
+    "pct_saved_mean": -12.02,
     "noepi_wins": false
   },
   {
     "task_name": "lru_cache",
     "difficulty": "hard",
     "supervisor_behavior": "fixation_architecture_switch",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 1682.3,
-      "tokens_std": 1328.8,
-      "iterations_mean": 2.33,
+      "tokens_mean": 1182.2,
+      "tokens_std": 604.2,
+      "iterations_mean": 1.4,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -78,59 +134,108 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        568,
-        1326,
-        3153
+        1356,
+        668,
+        843,
+        769,
+        757,
+        1805,
+        749,
+        2412,
+        767,
+        1696
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 1767.7,
-      "iterations_mean": 1.67,
+      "tokens_mean": 2430.9,
+      "iterations_mean": 2.0,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        2281,
-        2292,
-        730
+        2376,
+        2222,
+        809,
+        827,
+        3970,
+        765,
+        7895,
+        2710,
+        2010,
+        725
       ]
     },
     "single_shot": {
-      "score_mean": 0.3333,
-      "tokens_mean": 652.0,
+      "score_mean": 0.7,
+      "tokens_mean": 737.8,
       "raw_scores": [
         0.0,
+        1.0,
+        1.0,
         0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        672,
-        719,
-        565
+        742,
+        762,
+        780,
+        845,
+        630,
+        521,
+        741,
+        790,
+        699,
+        868
       ]
     },
-    "tokens_saved_mean": 85.3,
-    "pct_saved_mean": 4.83,
+    "tokens_saved_mean": 1248.7,
+    "pct_saved_mean": 51.37,
     "noepi_wins": true
   },
   {
     "task_name": "rate_limiter",
     "difficulty": "hard",
     "supervisor_behavior": "iterate_on_timing_logic",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 602.3,
-      "tokens_std": 88.5,
+      "tokens_mean": 479.7,
+      "tokens_std": 170.0,
       "iterations_mean": 1.0,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -138,59 +243,108 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        533,
-        572,
-        702
+        324,
+        322,
+        662,
+        676,
+        321,
+        652,
+        569,
+        313,
+        323,
+        635
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 433.3,
+      "tokens_mean": 449.0,
       "iterations_mean": 1.0,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
+        322,
+        644,
         321,
-        655,
-        324
+        326,
+        532,
+        318,
+        575,
+        442,
+        692,
+        318
       ]
     },
     "single_shot": {
-      "score_mean": 0.6667,
-      "tokens_mean": 532.3,
+      "score_mean": 1.0,
+      "tokens_mean": 512.5,
       "raw_scores": [
         1.0,
         1.0,
-        0.0
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
       ],
       "raw_tokens": [
-        323,
-        684,
-        590
+        324,
+        321,
+        724,
+        320,
+        319,
+        506,
+        638,
+        635,
+        670,
+        668
       ]
     },
-    "tokens_saved_mean": -169.0,
-    "pct_saved_mean": -39.0,
+    "tokens_saved_mean": -30.7,
+    "pct_saved_mean": -6.84,
     "noepi_wins": false
   },
   {
     "task_name": "expression_evaluator",
     "difficulty": "hard",
     "supervisor_behavior": "multi_step_improvement",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 1975.7,
-      "tokens_std": 1230.4,
-      "iterations_mean": 2.33,
+      "tokens_mean": 1987.4,
+      "tokens_std": 2096.6,
+      "iterations_mean": 2.0,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -198,59 +352,108 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        1657,
-        3334,
-        936
+        1214,
+        977,
+        7531,
+        728,
+        894,
+        3069,
+        1856,
+        925,
+        542,
+        2138
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 1432.3,
-      "iterations_mean": 1.33,
+      "tokens_mean": 1467.8,
+      "iterations_mean": 1.4,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        805,
-        2700,
-        792
+        870,
+        1021,
+        2306,
+        771,
+        768,
+        623,
+        769,
+        2616,
+        2386,
+        2548
       ]
     },
     "single_shot": {
-      "score_mean": 0.6667,
-      "tokens_mean": 597.0,
+      "score_mean": 0.4,
+      "tokens_mean": 772.8,
       "raw_scores": [
+        1.0,
         0.0,
         1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
         1.0
       ],
       "raw_tokens": [
-        717,
-        511,
-        563
+        534,
+        705,
+        775,
+        970,
+        774,
+        760,
+        1073,
+        637,
+        728,
+        772
       ]
     },
-    "tokens_saved_mean": -543.3,
-    "pct_saved_mean": -37.93,
+    "tokens_saved_mean": -519.6,
+    "pct_saved_mean": -35.4,
     "noepi_wins": false
   },
   {
     "task_name": "mini_interpreter",
     "difficulty": "hard",
     "supervisor_behavior": "architecture_requiring_multiple_passes",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 1119.0,
-      "tokens_std": 865.8,
-      "iterations_mean": 1.67,
+      "tokens_mean": 1962.2,
+      "tokens_std": 1561.5,
+      "iterations_mean": 2.0,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -258,59 +461,108 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        586,
-        653,
-        2118
+        606,
+        5851,
+        947,
+        2342,
+        1796,
+        555,
+        1216,
+        2947,
+        1441,
+        1921
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 1633.7,
-      "iterations_mean": 1.67,
+      "tokens_mean": 1320.3,
+      "iterations_mean": 1.5,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        1704,
-        579,
-        2618
+        573,
+        2164,
+        571,
+        952,
+        1865,
+        1830,
+        632,
+        775,
+        1902,
+        1939
       ]
     },
     "single_shot": {
-      "score_mean": 1.0,
-      "tokens_mean": 603.3,
+      "score_mean": 0.65,
+      "tokens_mean": 588.6,
       "raw_scores": [
         1.0,
+        0.0,
         1.0,
-        1.0
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0
       ],
       "raw_tokens": [
-        647,
-        580,
-        583
+        573,
+        579,
+        563,
+        587,
+        597,
+        611,
+        537,
+        567,
+        669,
+        603
       ]
     },
-    "tokens_saved_mean": 514.7,
-    "pct_saved_mean": 31.5,
-    "noepi_wins": true
+    "tokens_saved_mean": -641.9,
+    "pct_saved_mean": -48.62,
+    "noepi_wins": false
   },
   {
     "task_name": "regex_engine",
     "difficulty": "extreme",
     "supervisor_behavior": "plateau_detection_on_hard_task",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 9043.3,
-      "tokens_std": 6345.2,
-      "iterations_mean": 3.33,
+      "tokens_mean": 5646.2,
+      "tokens_std": 3217.1,
+      "iterations_mean": 2.4,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -318,59 +570,108 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        3903,
-        7092,
-        16135
+        1824,
+        1840,
+        8929,
+        11252,
+        6067,
+        5590,
+        5651,
+        5122,
+        8317,
+        1870
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 7377.3,
-      "iterations_mean": 2.67,
+      "tokens_mean": 7261.6,
+      "iterations_mean": 2.4,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        2211,
-        6069,
-        13852
+        1737,
+        10006,
+        5968,
+        6476,
+        4694,
+        9046,
+        16409,
+        10911,
+        1833,
+        5536
       ]
     },
     "single_shot": {
-      "score_mean": 0.6296,
-      "tokens_mean": 2134.3,
+      "score_mean": 0.5667,
+      "tokens_mean": 1995.7,
       "raw_scores": [
         1.0,
+        0.8888888888888888,
+        0.8888888888888888,
+        0.8888888888888888,
         0.0,
-        0.8888888888888888
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "raw_tokens": [
+        1879,
+        1099,
+        1818,
         2211,
-        1981,
+        2211,
+        2165,
+        1941,
+        2211,
+        2211,
         2211
       ]
     },
-    "tokens_saved_mean": -1666.0,
-    "pct_saved_mean": -22.58,
-    "noepi_wins": false
+    "tokens_saved_mean": 1615.4,
+    "pct_saved_mean": 22.25,
+    "noepi_wins": true
   },
   {
     "task_name": "event_emitter",
     "difficulty": "extreme",
     "supervisor_behavior": "multi_component_spiral",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 795.0,
-      "tokens_std": 55.7,
+      "tokens_mean": 810.8,
+      "tokens_std": 94.0,
       "iterations_mean": 1.0,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -378,59 +679,108 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        757,
-        769,
-        859
+        882,
+        700,
+        766,
+        898,
+        900,
+        860,
+        661,
+        750,
+        928,
+        763
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 787.3,
-      "iterations_mean": 1.0,
+      "tokens_mean": 1191.9,
+      "iterations_mean": 1.2,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        954,
-        673,
-        735
+        808,
+        841,
+        983,
+        884,
+        864,
+        2435,
+        728,
+        941,
+        830,
+        2605
       ]
     },
     "single_shot": {
       "score_mean": 1.0,
-      "tokens_mean": 845.3,
+      "tokens_mean": 774.4,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        871,
-        656,
-        1009
+        703,
+        806,
+        979,
+        638,
+        791,
+        682,
+        675,
+        1013,
+        794,
+        663
       ]
     },
-    "tokens_saved_mean": -7.7,
-    "pct_saved_mean": -0.97,
-    "noepi_wins": false
+    "tokens_saved_mean": 381.1,
+    "pct_saved_mean": 31.97,
+    "noepi_wins": true
   },
   {
     "task_name": "hash_ring",
     "difficulty": "extreme",
     "supervisor_behavior": "fixation_on_wrong_invariant",
-    "n_runs": 3,
+    "n_runs": 10,
     "noepi": {
       "score_mean": 1.0,
       "score_std": 0.0,
-      "tokens_mean": 527.0,
-      "tokens_std": 161.2,
-      "iterations_mean": 1.0,
+      "tokens_mean": 672.9,
+      "tokens_std": 222.7,
+      "iterations_mean": 1.1,
       "stop_reasons": [
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
+        "solved",
         "solved",
         "solved",
         "solved"
@@ -438,45 +788,87 @@
       "raw_scores": [
         1.0,
         1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0
       ],
       "raw_tokens": [
-        417,
-        452,
-        712
+        667,
+        642,
+        677,
+        657,
+        758,
+        437,
+        435,
+        627,
+        593,
+        1236
       ]
     },
     "flat": {
       "score_mean": 1.0,
-      "tokens_mean": 1412.3,
-      "iterations_mean": 1.67,
+      "tokens_mean": 1248.6,
+      "iterations_mean": 1.5,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
-        2695,
-        919,
-        623
+        4150,
+        490,
+        668,
+        686,
+        616,
+        639,
+        1839,
+        757,
+        2000,
+        641
       ]
     },
     "single_shot": {
-      "score_mean": 1.0,
-      "tokens_mean": 514.3,
+      "score_mean": 0.9,
+      "tokens_mean": 588.9,
       "raw_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
         1.0,
         1.0,
         1.0
       ],
       "raw_tokens": [
         443,
-        636,
-        464
+        521,
+        635,
+        447,
+        703,
+        595,
+        618,
+        773,
+        437,
+        717
       ]
     },
-    "tokens_saved_mean": 885.3,
-    "pct_saved_mean": 62.69,
+    "tokens_saved_mean": 575.7,
+    "pct_saved_mean": 46.11,
     "noepi_wins": true
   }
 ]
